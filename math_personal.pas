@@ -23,6 +23,7 @@ begin
   math_funcs.Add('sin',sin);
   math_funcs.Add('cos',cos);
   math_funcs.Add('tan',tan);
+  if (func='sin') or (func='cos') or (func='tan') then a:=DegToRad(a);
   result:=math_funcs.Get(func)(a);
 end;
 
