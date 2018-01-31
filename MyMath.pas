@@ -1,4 +1,0 @@
-Unit MyMath;
-begin
-
-end.
