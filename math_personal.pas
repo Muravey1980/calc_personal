@@ -3,13 +3,13 @@ Unit math_personal;
 type
   math_func = function (x: real): real;
 
-Function MathCalc(a:real;b:real;action:char):real;
+Function MathCalc(a:real;b:real;action:string):real;
 begin
   case action of
-    '+': result:=a+b;
-    '-': result:=a-b;
-    '*': result:=a*b;
-    '/': result:=a/b;
+    string('+'): result:=a+b;
+    string('-'): result:=a-b;
+    string('*'): result:=a*b;
+    string('/'): result:=a/b;
   end;
 end;
 
