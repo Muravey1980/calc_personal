@@ -2,7 +2,7 @@ Unit Unit1;
 
 interface
 
-uses System, System.Drawing, System.Windows.Forms;
+uses System, System.Drawing, System.Windows.Forms, math_personal ;
 
 type
   Func = function (x: real): real;
@@ -13,38 +13,38 @@ type
     procedure MathOperButton_Click(sender: Object; e: EventArgs);
     procedure button_ce_Click(sender: Object; e: EventArgs);
     procedure button_c_Click(sender: Object; e: EventArgs);
-    procedure button_unarminus_Click(sender: Object; e: EventArgs);
     procedure button_bcksps_Click(sender: Object; e: EventArgs);
     procedure button_func_Click(sender: Object; e: EventArgs);
+    procedure button_unarminus_Click (sender: Object; e: EventArgs);
   {$region FormDesigner}
   private
     {$resource Unit1.Form1.resources}
-    button_dig6: Button;
+    DisplayBox: TextBox;
+    groupBox1: GroupBox;
+    button1: Button;
+    button_func_sqr: Button;
+    button_func_cos: Button;
+    button_func_sin: Button;
+    button_func_sqrt: Button;
     button_dig1: Button;
-    button_dig3: Button;
-    Button_plus: Button;
+    button_bcksps: Button;
+    button_c: Button;
+    button_ce: Button;
     button_dig2: Button;
+    button18: Button;
+    button_dig3: Button;
+    button_unarminus: Button;
+    button17: Button;
+    button_dig4: Button;
+    button16: Button;
     button_dig5: Button;
+    button_dot: Button;
+    button_dig0: Button;
+    button_dig6: Button;
+    Button_plus: Button;
     button_dig7: Button;
     button_dig8: Button;
     button_dig9: Button;
-    button_dig4: Button;
-    button_unarminus: Button;
-    button_ce: Button;
-    button_bcksps: Button;
-    button_dot: Button;
-    button_dig0: Button;
-    button16: Button;
-    button17: Button;
-    button18: Button;
-    button_c: Button;
-    groupBox1: GroupBox;
-    button_func_sqrt: Button;
-    DisplayBox: TextBox;
-    button_func_sqr: Button;
-    button_func_cos: Button;
-    button1: Button;
-    button_func_sin: Button;
     {$include Unit1.Form1.inc}
   {$endregion FormDesigner}
   public
@@ -82,16 +82,10 @@ begin
     var b:string:=Button(sender).Text;
     if rows[1]='0' then rows[0]:=a+b
     else begin
-      case Copy(rows[0],Length(rows[0]),1) of
-        String('+'):
-          subresult:=StrToFloat(Copy(rows[0],1,Length(rows[0])-1))+StrToFloat(Copy(rows[1],1,Length(rows[1])));
-        String('-'):
-          subresult:=StrToFloat(Copy(rows[0],1,Length(rows[0])-1))-StrToFloat(Copy(rows[1],1,Length(rows[1])));
-        String('*'):
-          subresult:=StrToFloat(Copy(rows[0],1,Length(rows[0])-1))*StrToFloat(Copy(rows[1],1,Length(rows[1])));
-        String('/'):
-          subresult:=StrToFloat(Copy(rows[0],1,Length(rows[0])-1))/StrToFloat(Copy(rows[1],1,Length(rows[1])));
-      end;
+      var c:real:=StrToFloat(Copy(rows[0],1,Length(rows[0])-1));
+      var d:real:=StrToFloat(Copy(rows[1],1,Length(rows[1])));
+      var action:string:=Copy(rows[0],Length(rows[0]),1);
+      subresult:=MathCalc(c,d,action);
       rows[0]:=FloatToStr(subresult)+b;
     end;
   end;
@@ -119,10 +113,6 @@ begin
   DisplayBox.Text:=''+#13#10+'0';
 end;
 
-procedure Form1.button_unarminus_Click(sender: Object; e: EventArgs);
-begin
-  DisplayBox.Text:=DisplayBox.Lines[0]+#13#10+FloatToStr(-StrToFloat(DisplayBox.Lines[1]));
-end;
 
 procedure Form1.button_bcksps_Click(sender: Object; e: EventArgs);
 var
@@ -137,17 +127,21 @@ end;
 procedure Form1.button_func_Click(sender: Object; e: EventArgs);
 var
   resultat:real;
-  f:Func;
+  //f:Func;
   rows:array of string;
 begin
   rows:=DisplayBox.Lines;
-  f:=funcs[StrToInt(Button(sender).Tag.ToString)];
-  resultat:=f(StrToFloat(DisplayBox.Lines[1]));
+  //f:=funcs[StrToInt(Button(sender).Tag.ToString)];
+  //resultat:=f();
+  resultat:=FuncCalc(StrToFloat(DisplayBox.Lines[1]),Button(sender).Text);
   rows[1]:=FloatToStr(resultat);
   DisplayBox.Text:=''+#13#10+rows[1];
 end;
 
-
+procedure Form1.button_unarminus_Click (sender: Object; e: EventArgs);
+begin
+    DisplayBox.Text:=DisplayBox.Lines[0]+#13#10+FloatToStr(-StrToFloat(DisplayBox.Lines[1]));
+end;
 
 
 end.
